@@ -1,0 +1,43 @@
+#include <iostream>
+#include <vector>
+#include <algorithm>
+using namespace std;
+
+#include "solution.h"
+#include<bits/stdc++.h>
+vector<int> kSmallest(int input[], int n, int k) {
+    // Write your code here
+    
+    vector<int> demo;
+    sort(input,input+n);
+    
+    for(int i=0;i<k;i++){
+        demo.push_back(input[i]);
+    }
+    
+    
+    return demo;
+    
+}
+int main() {
+    int size;
+    cin >> size;
+
+    int *input = new int[size];
+
+    for (int i = 0; i < size; i++) {
+        cin >> input[i];
+    }
+
+    int k;
+    cin >> k;
+
+    vector<int> output = kSmallest(input, size, k);
+    sort(output.begin(), output.end());
+
+    for (int i = 0; i < output.size(); i++) {
+        cout << output[i] << " ";
+    }
+
+    delete[] input;
+}
