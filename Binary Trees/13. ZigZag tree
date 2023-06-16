@@ -1,0 +1,130 @@
+#include <iostream>
+#include <queue>
+
+template <typename T>
+class BinaryTreeNode {
+   public:
+    T data;
+    BinaryTreeNode<T>* left;
+    BinaryTreeNode<T>* right;
+
+    BinaryTreeNode(T data) {
+        this->data = data;
+        left = NULL;
+        right = NULL;
+    }
+};
+
+using namespace std;
+#include "solution.h"
+
+BinaryTreeNode<int>* takeInput() {
+    int rootData;
+    cin >> rootData;
+    if (rootData == -1) {
+        return NULL;
+    }
+    BinaryTreeNode<int>* root = new BinaryTreeNode<int>(rootData);
+    queue<BinaryTreeNode<int>*> q;
+    q.push(root);
+    while (!q.empty()) {
+        BinaryTreeNode<int>* currentNode = q.front();
+        q.pop();
+        int leftChild, rightChild;
+
+        cin >> leftChild;
+        if (leftChild != -1) {
+            BinaryTreeNode<int>* leftNode = new BinaryTreeNode<int>(leftChild);
+            currentNode->left = leftNode;
+            q.push(leftNode);
+        }
+
+        cin >> rightChild;
+        if (rightChild != -1) {
+            BinaryTreeNode<int>* rightNode =
+                new BinaryTreeNode<int>(rightChild);
+            currentNode->right = rightNode;
+            q.push(rightNode);
+        }
+    }
+    return root;
+}
+#include <list>
+void zigZagOrder(BinaryTreeNode<int> *root) {
+    // Write your code here
+   if (root == nullptr)
+        return;
+ 
+    // create an empty double ended queue and enqueue root node
+    list<BinaryTreeNode<int>*> deque;     // or use deque
+    deque.push_front(root);
+ 
+    // flag used to differentiate between odd or even level
+    bool flag = false;
+ 
+    // loop till deque is empty
+    while (!deque.empty())
+    {
+        // calculate number of nodes in current level
+        int nodeCount = deque.size();
+ 
+        // print left to right
+        if (!flag)
+        {
+           // process each node of current level and enqueue their
+           // non-empty left and right child to deque
+           while (nodeCount)
+           {
+                // pop from front if flag is true
+                BinaryTreeNode<int>* curr = deque.front();
+                deque.pop_front();
+ 
+                cout << curr->data << " ";
+ 
+                // push left child to end followed by right child if flag is true
+ 
+                if (curr->left != nullptr)
+                    deque.push_back(curr->left);
+ 
+                if (curr->right != nullptr)
+                    deque.push_back(curr->right);
+ 
+                nodeCount--;
+           }
+        }
+ 
+        // print right to left
+        else
+        {
+           // process each node of current level and enqueue their
+           // non-empty right and left child to queue
+           while (nodeCount)
+           {
+                // Important - pop from back if flag is false
+                BinaryTreeNode<int>* curr = deque.back();
+                deque.pop_back();
+ 
+                cout << curr->data << " ";   // print front node
+ 
+                // Important - push right child to front followed by left
+                // child if flag is false
+ 
+                if (curr->right != nullptr)
+                    deque.push_front(curr->right);
+ 
+                if (curr->left != nullptr)
+                    deque.push_front(curr->left);
+ 
+                nodeCount--;
+           }
+        }
+ 
+        // flip the flag for next level
+        flag = !flag;
+        cout << endl;
+    }
+}
+int main() {
+    BinaryTreeNode<int>* root = takeInput();
+    zigZagOrder(root);
+}
