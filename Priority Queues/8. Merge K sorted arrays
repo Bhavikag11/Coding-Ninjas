@@ -1,0 +1,49 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+#include "solution.h"
+#include<bits/stdc++.h>
+using namespace std;
+vector<int> mergeKSortedArrays(vector<vector<int>*> input) {
+    // Write your code here
+    vector<int> news;
+    while(input.size()>0){
+        vector<int> *temp=input.back();
+        input.pop_back();
+   		vector<int> &temp1= *temp;
+        for(int j=0;j<temp1.size();j++){
+            news.push_back(temp1[j]);
+        }
+    }
+    sort(news.begin(),news.end());
+    return news;
+}
+int main() {
+    int k;
+    cin >> k;
+
+    vector<vector<int> *> input;
+
+    for (int j = 1; j <= k; j++) {
+        int size;
+        cin >> size;
+        vector<int> *current = new vector<int>;
+
+        for (int i = 0; i < size; i++) {
+            int a;
+            cin >> a;
+            current->push_back(a);
+        }
+
+        input.push_back(current);
+    }
+
+    vector<int> output = mergeKSortedArrays(input);
+
+    for (int i = 0; i < output.size(); i++) {
+        cout << output[i] << " ";
+    }
+
+    return 0;
+}
