@@ -1,0 +1,47 @@
+#include <iostream>
+using namespace std;
+
+#include "solution.h"
+#include<bits/stdc++.h>
+int arrayRotateCheck(int *input, int size)
+{
+
+    int temp[size];
+    for(int i=0;i<size;i++){
+        temp[i]=input[i];
+    }
+    int c=0;
+    sort(temp,temp+size);
+    for(int i=0;i<size;i++){
+        if(temp[0]==input[i]){
+            break;
+        }
+        c++;
+    }
+    return c;
+
+
+}
+int main()
+{
+
+	int t;
+	cin >> t;
+	while (t--)
+	{
+
+		int size;
+		cin >> size;
+		int *input = new int[size];
+
+		for (int i = 0; i < size; i++)
+		{
+			cin >> input[i];
+		}
+
+		cout << arrayRotateCheck(input, size) << endl;
+		delete[] input;
+	}
+	
+	return 0;
+}
