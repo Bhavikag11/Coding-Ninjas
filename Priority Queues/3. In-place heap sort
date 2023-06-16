@@ -1,0 +1,82 @@
+#include <iostream>
+#include "solution.h"
+
+using namespace std;
+void heapSort(int pq[], int n) {
+    // Write your code
+    
+    for(int i=1;i<n;i++){
+        
+        int childIndex = i;
+        while(childIndex > 0){
+            int parentIndex = (childIndex-1)/2;
+            
+            if(pq[childIndex] < pq[parentIndex]){
+                int temp = pq[parentIndex];
+                pq[parentIndex] = pq[childIndex];
+                pq[childIndex] = temp;
+            }else{
+                break;
+            }
+            childIndex = parentIndex;
+        }
+    }
+    
+    int size = n;
+    
+    while(size > 1){
+        
+        int temp = pq[0];
+        pq[0] = pq[size-1];
+        pq[size-1] = temp;
+
+        size--;
+        
+        int parentIndex = 0;
+        int leftIndex = (2*parentIndex)+1;
+        int rightIndex = (2*parentIndex)+2;
+        
+        while(leftIndex < size){
+            int minIndex = parentIndex;
+            if(pq[minIndex] > pq[leftIndex])
+                minIndex = leftIndex;
+
+            if(pq[minIndex] > pq[rightIndex] && rightIndex < size)
+                minIndex = rightIndex;
+            
+            if(minIndex == parentIndex)
+                break;
+        
+            int temp = pq[minIndex];
+            pq[minIndex] = pq[parentIndex];
+           	pq[parentIndex] = temp;
+            
+            parentIndex = minIndex;
+            rightIndex = (2*parentIndex)+2;
+            leftIndex = (2*parentIndex)+1;
+        }
+        
+    }
+    
+    
+    
+    
+}
+int main() {
+    int size;
+    cin >> size;
+
+    int *input = new int[size];
+
+    for (int i = 0; i < size; i++) {
+        cin >> input[i];
+    } 
+
+    heapSort(input, size);
+
+    for (int i = 0; i < size; i++) {
+        cout << input[i] << " ";
+    } 
+
+    delete[] input;
+}
