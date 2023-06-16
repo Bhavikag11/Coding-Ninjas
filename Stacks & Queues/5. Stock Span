@@ -1,0 +1,72 @@
+
+#include <iostream>
+#include <stack>
+using namespace std;
+
+#include "solution.h"
+#include<bits/stdc++.h>
+//we have to find the span of each stock ai ith day
+int* stockSpan(int *price, int size)  {
+	// Write your code here
+    
+    //approach --> use stack to store indices of the prices of stock(ith day)
+    //compare price[i] and price[stack top]--> 2cases
+    // price[i] < price[stack top]--> span = i - stack top (diff of indices) --> push the ith index 
+    //in stack
+    //price[i] > price[stack top]-> best price is price[i] --> pop top of stack --> stack empty
+    //--> push the ith index --> span = i+1;
+    
+    
+    //creating an output array
+    int *span = new int[size];
+    //creating a stack
+    stack <int> index;
+    
+    //for the oth day - we dont have amy prev comparisons so we set the value ourselves
+    index.push(0);
+    span[0]=1;
+    
+    for(int i=1;i<size;i++){
+        
+        while(index.size()!=0){
+            if(price[i]<=price[index.top()]){
+            	int span_ith_day = (i - index.top());
+            	span[i] = span_ith_day; 
+            	index.push(i);
+                break;
+        	}
+        	else{
+            	index.pop();
+        	} 
+        }
+        //reaching here means stack is empty
+        if(index.size()==0){
+        	int span_ith_day = i + 1;
+        	span[i] = span_ith_day;
+        	index.push(i); 
+        }
+        
+        
+    }
+    return span;
+    
+}
+int main() {
+    int n;
+    cin >> n;
+
+    int* prices = new int[n];
+    for (int i = 0; i < n; i++)
+        cin >> prices[i];
+
+    int* spans = new int[n];
+    calculateSpan(prices, n, spans);
+
+    for (int i = 0; i < n; i++)
+        cout << spans[i] << " ";
+
+    delete[] prices;
+    delete[] spans;
+
+    return 0;
+}
