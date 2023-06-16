@@ -1,0 +1,42 @@
+#include <iostream>
+#include "solution.h"
+using namespace std;
+// input - input array
+// size - length of input array
+// element - value to be searched
+
+int binarySearch2(int input[],int start,int end,int ele){
+    int mid = (start + end)/2;
+    if(end>=start){
+        if(input[mid] == ele){
+            return mid;
+        }
+        if(input[mid]>ele){
+            return binarySearch2(input,start,mid-1,ele);
+        }
+        return binarySearch2(input,mid+1,end,ele);
+    }
+    return -1;
+        
+}
+
+
+int binarySearch(int input[], int size, int element) {
+    // Write your code here
+	int l = 0;
+    int r = size-1;
+    binarySearch2(input,l,r,element);
+}	
+
+int main() {
+    int input[100000],length,element, ans;
+    cin >> length;
+    for(int i =0;i<length;i++)
+    { 
+        cin >> input[i];;
+    }
+
+    cin>>element;
+    ans = binarySearch(input, length, element);
+    cout<< ans << endl;
+}
