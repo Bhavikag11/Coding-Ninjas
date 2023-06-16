@@ -1,0 +1,98 @@
+#include <bits/stdc++.h>
+
+using namespace std;
+#include "solution.h"
+
+class Runner {
+  vector<int> v;
+
+public:
+  void takeInput() {
+    int n;
+    cin >> n;
+    v.assign(n, 0);
+    for (int i = 0; i < n; ++i) {
+      cin >> v[i];
+    }
+  }
+
+  void execute() {
+    auto c = v;
+    mergeSort(c, 0, (int)c.size() - 1);
+  }
+
+  void executeAndPrintOutput() {
+    auto c = v;
+    mergeSort(c, 0, (int)c.size() - 1);
+    for (int i = 0; i < c.size(); ++i)
+      cout << c[i] << ' ';
+    cout << endl;
+  }
+};
+void merge(int arr[],int l,int m,int r){
+    int i, j, k; 
+    int n1 = m - l + 1; 
+    int n2 = r - m; 
+    int L[n1], R[n2]; 
+  
+    for (i = 0; i < n1; i++) 
+        L[i] = arr[l + i]; 
+    for (j = 0; j < n2; j++) 
+        R[j] = arr[m + 1 + j]; 
+    i = 0;
+    j = 0; 
+    k = l;
+    while (i < n1 && j < n2) { 
+        if (L[i] <= R[j]) { 
+            arr[k] = L[i]; 
+            i++; 
+        } 
+        else { 
+            arr[k] = R[j]; 
+            j++; 
+        } 
+        k++; 
+    } 
+    while (i < n1) { 
+        arr[k] = L[i]; 
+        i++; 
+        k++; 
+    } 
+  
+    while (j < n2) { 
+        arr[k] = R[j]; 
+        j++; 
+        k++; 
+    } 
+}
+
+
+void mergeSort2(int input[],int si,int ei){
+    if(si>=ei){
+        return;
+    }
+    int mid = (si+ei)/2;
+    mergeSort2(input,si,mid);
+    mergeSort2(input,mid+1,ei);
+    merge(input,si,mid,ei);
+}
+
+
+
+void mergeSort(int input[], int size){
+	// Write your code here
+    int si = 0;
+    int ei = size-1;
+    mergeSort2(input,si,ei);
+    
+}
+
+int main() {
+  // freopen("./Testcases/large/in/input30.txt", "r", stdin);
+  // freopen("./Testcases/large/out/output30.txt", "w", stdout);
+  Runner runner;
+  runner.takeInput();
+  runner.executeAndPrintOutput();
+
+  return 0;
+}
