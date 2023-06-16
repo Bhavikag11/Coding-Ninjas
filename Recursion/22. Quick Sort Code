@@ -1,0 +1,118 @@
+#include <algorithm>
+#include <climits>
+#include <cstdlib>
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <utility>
+#include <vector>
+using namespace std;
+#include "solution.h"
+
+class Runner {
+    vector<int> v;
+
+public:
+    void takeInput() {
+        int n;
+        cin >> n;
+        v.resize(n);
+        for (int i = 0; i < n; i++)
+            cin >> v[i];
+    }
+
+    void execute() {
+        int n = (int)v.size();
+
+        int* input = new int[n];
+        for (int i = 0; i < n; i++)
+            input[i] = v[i];
+
+        quickSort(input, 0, n - 1);
+
+        free(input);
+    }
+
+    void executeAndPrintOutput() {
+        int n = (int)v.size();
+
+        int* input = new int[n];
+        for (int i = 0; i < n; i++)
+            input[i] = v[i];
+
+        quickSort(input, 0, n - 1);
+
+        for (int i = 0; i < n; i++)
+            cout << input[i] << ' ';
+        cout << '\n';
+
+        free(input);
+    }
+};
+int partition(int input[],int si,int ei){
+    int pivot = input[si];
+    int count = 0;
+    int x = si+1;
+    while(x != ei+1){
+        if(input[x]<pivot){
+            count++;
+        }
+        x++;
+    }
+    
+    int temp = input[count+si];
+    input[count+si] = input[si];
+    input[si] = temp;
+    
+    int i = si;
+    int j = ei;
+    while(i<(si+count) && j>(si+count)){
+        if(input[i]<input[si+count]){
+            i++;
+        }
+        else if(input[j]>input[si+count]){
+            j--;
+        }
+        else{
+            int demo = input[j];
+            input[j] = input[i];
+            input[i] = demo;
+            j--;
+        }
+    }
+	return (count+si);   
+    
+}
+
+void quickSort2(int input[],int si,int ei){
+    if(si >= ei){
+        return;
+    }
+    int piv = partition(input,si,ei);
+    quickSort2(input,si,piv);
+    quickSort2(input,piv+1,ei);
+}
+
+void quickSort(int input[], int size) {
+  /* Don't write main().
+     Don't read input, it is passed as function argument.
+     Change in the given array itself.
+     Taking input and printing output is handled automatically.
+  */
+    
+    if(size<1 || size>1000){
+        return;
+    }
+    
+    quickSort2(input,0,size-1);
+}
+
+int main() {
+    // freopen("./Testcases/large/in/input.txt", "r", stdin);
+    // freopen("./Testcases/large/out/output.txt", "w", stdout);
+    Runner runner;
+    runner.takeInput();
+    runner.executeAndPrintOutput();
+    return 0;
+}
