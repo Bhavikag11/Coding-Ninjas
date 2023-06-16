@@ -1,0 +1,27 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+#include "solution.h"
+
+#include<unordered_map>
+#include <bits/stdc++.h>
+string uniqueChar(string str) {
+    // Write your code here
+    string news;
+    unordered_map<char , int> seen;
+    for(int i=0;i<str.length();i++){
+        if(seen[str[i]]>0){
+            continue;
+        }else{
+            seen[str[i]]=1;
+        }
+        cout<<str[i];
+    }
+   return news;
+}
+int main() {
+    string str;
+    cin >> str;
+    cout << uniqueChar(str);
+}
