@@ -1,0 +1,30 @@
+#include <iostream>
+#include "solution.h"
+using namespace std;
+
+#include<string.h>
+#include<bits/stdc++.h>
+int stringToNumber(char input[]) {
+
+    
+    int size = strlen(input);
+    if(size == 1){
+        return (input[0] - '0');
+    }
+    
+    
+    double smallOutput = atoi(input+1);
+    double smallOutput2 = input[0] - '0';
+    
+    smallOutput2 = smallOutput2 * pow(10, size-1) + smallOutput;
+    return int(smallOutput2);
+
+}
+
+
+
+int main() {
+    char input[50];
+    cin >> input;
+    cout << stringToNumber(input) << endl;
+}
