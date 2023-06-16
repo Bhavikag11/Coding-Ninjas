@@ -1,0 +1,47 @@
+#include <iostream>
+#include <string>
+#include "solution.h"
+using namespace std;
+#include <string>
+using namespace std;
+
+int keypad(int num, string output[]){
+    /* Insert all the possible combinations of the integer number into the output string array. You do not need to
+    print anything, just return the number of strings inserted into the array.
+    */
+    string smalloutput[1000000];
+    string mapping[]={" "," ","abc","def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    //base case
+    if(num==0 || num==1)
+    {
+        smalloutput[0]=" ";
+        return 1;
+    }
+      
+    int r=num%10;
+    num=num/10;
+    int count=keypad(num,smalloutput);
+    
+    string smallstring=mapping[r];
+    int k=0;
+    for(int i=0;i<smallstring.length();i++)
+    {
+        for(int j=0;j<count;j++)
+        {
+            output[k]=smalloutput[j]+smallstring[i];
+            k++;
+        }
+    }
+    return k;
+}
+int main(){
+    int num;
+    cin >> num;
+
+    string output[10000];
+    int count = keypad(num, output);
+    for(int i = 0; i < count && i < 10000; i++){
+        cout << output[i] << endl;
+    }
+    return 0;
+}
